@@ -375,7 +375,7 @@ function validate() {
   let reportContent = '';
   if (errors.length > 0) {
     console.error('\n--- Validation FAILED! ---');
-    reportContent = `### ❌ Validation Failed\n\nFound **${errors.length}** issues in this Pull Request. Please correct them to enable auto-merge:\n\n`;
+    reportContent = `### ❌ Validation Failed\n\nFound **${errors.length}** issues in this Pull Request. Please correct them before a maintainer reviews your pull request:\n\n`;
     reportContent += '| Target / Item Index | Error Description |\n';
     reportContent += '|---|---|\n';
     errors.forEach(err => {
@@ -385,15 +385,11 @@ function validate() {
     });
     
     fs.writeFileSync('validation_report.md', reportContent);
-    
-    if (process.env.GITHUB_OUTPUT) {
-      fs.appendFileSync(process.env.GITHUB_OUTPUT, `auto_merge=false\n`);
-    }
     process.exit(1);
   } else {
     console.log('\n--- Validation PASSED! ---');
     
-    let shouldDisableAutoMerge = false;
+    let hasAlerts = false;
     let removalDetected = false;
     let removalReason = '';
     const matchedExistingNames = [];
@@ -401,7 +397,7 @@ function validate() {
     
     const fileCheck = checkFileDeletionsOrModifications();
     if (fileCheck.hasRemoval) {
-      shouldDisableAutoMerge = true;
+      hasAlerts = true;
       removalDetected = true;
       removalReason = fileCheck.reason;
     }
@@ -417,7 +413,7 @@ function validate() {
             (prItem.url || '').trim() === (baselineItem.url || '').trim()
           );
           if (!exists) {
-            shouldDisableAutoMerge = true;
+            hasAlerts = true;
             removalDetected = true;
             removalReason = `An existing database entry was modified or removed: "${baselineItem.song}" by ${baselineItem.artist}.`;
             break;
@@ -457,20 +453,20 @@ function validate() {
       newOrModifiedItems.forEach(item => {
         const { songName, isSong, isAlbum, url } = getItemTypeAndName(item);
         if (isSong && songName && baselineSongs.has(songName)) {
-          shouldDisableAutoMerge = true;
+          hasAlerts = true;
           matchedExistingNames.push(`Song: "${item.song}"`);
         }
         if (isAlbum) {
           let isDup = false;
           if (songName && baselineAlbums.has(songName)) {
             isDup = true;
-            shouldDisableAutoMerge = true;
+            hasAlerts = true;
             matchedExistingNames.push(`Album Track: "${item.song}"`);
           }
           const match = url.match(/\/Album\/(.+)$/i);
           if (match && baselineAlbumUrls.has(match[1].toLowerCase())) {
             if (!isDup) {
-              shouldDisableAutoMerge = true;
+              hasAlerts = true;
               matchedExistingNames.push(`Album File: "${match[1]}"`);
             }
           }
@@ -478,27 +474,22 @@ function validate() {
       });
     }
 
-    const autoMerge = !shouldDisableAutoMerge;
+    reportContent = `### ✅ Validation Passed!\n\nAll conditions met (file sizes <= 5MB, correct ownership prefix, no internal duplicates).\n`;
     
-    if (shouldDisableAutoMerge) {
-      reportContent = `### ✅ Validation Passed (Manual Review Required)\n\nAll conditions met (file sizes <= 5MB, correct ownership prefix, no internal duplicates).\n\n⚠️ **Auto-merge is disabled** for manual review:\n`;
+    if (hasAlerts) {
+      reportContent += `\n⚠️ **Reviewer Notes / Warnings:**\n`;
       if (removalDetected) {
         reportContent += `- **Modification/Removal detected:** ${removalReason}\n`;
       }
       matchedExistingNames.forEach(name => {
         reportContent += `- **Already exists in database:** ${name}\n`;
       });
-      reportContent += `\nA maintainer must manually review and merge this pull request.`;
-    } else {
-      reportContent = `### ✅ Validation Passed!\n\nAll conditions met (file sizes <= 5MB, correct ownership prefix, no duplicates). Auto-merging...`;
     }
+    
+    reportContent += `\nA maintainer will review and manually merge this pull request.`;
     
     fs.writeFileSync('validation_report.md', reportContent);
-    
-    if (process.env.GITHUB_OUTPUT) {
-      fs.appendFileSync(process.env.GITHUB_OUTPUT, `auto_merge=${autoMerge ? 'true' : 'false'}\n`);
-    }
-    console.log(`Verification completed successfully. Auto-merge: ${autoMerge}`);
+    console.log(`Verification completed successfully. All checks passed.`);
   }
 }
 

@@ -510,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: `feat: added canvas for ${songName} - ${artistName}`,
                     head: `${forkOwner}:${branchName}`,
                     base: 'main',
-                    body: `This Pull Request was submitted automatically via the Echo Music Canvas portal.\n\n### 🎵 Submission Metadata\n* **Song Title:** ${songName}\n* **Artist/Singer:** ${artistName}\n* **Category:** ${destDir}\n* **Assigned Serial File:** \`${targetPath}\`\n\n*Auto-merge will run validation checks on this contribution.*`
+                    body: `This Pull Request was submitted automatically via the Echo Music Canvas portal.\n\n### 🎵 Submission Metadata\n* **Song Title:** ${songName}\n* **Artist/Singer:** ${artistName}\n* **Category:** ${destDir}\n* **Assigned Serial File:** \`${targetPath}\`\n\n*Validation checks will run automatically on this contribution.*`
                 })
             });
 
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
         statusSuccessIcon.style.display = 'block';
         
         statusTitle.textContent = 'Submission Sent!';
-        statusMessage.innerHTML = 'Thank you for your canvas submission! We have automatically created a Pull Request.<br><br>The continuous integration validation checks will run. If it passes all criteria, your visualizer will be **automatically merged** into the live repository.';
+        statusMessage.innerHTML = 'Thank you for your canvas submission! We have automatically created a Pull Request.<br><br>The continuous integration validation checks will run. Once they pass, a maintainer will review and manually merge your contribution into the live repository.';
         
         prLink.href = prUrl;
         prLinkContainer.style.display = 'block';

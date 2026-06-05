@@ -62,17 +62,17 @@ To ensure the integrity of `canvas.json` and prevent layout or loading issues, m
 
 ---
 
-## Continuous Integration (CI) and Automated Merging
+## Continuous Integration (CI) and Validation
 
-We run an automated validation and auto-merge workflow on every Pull Request. If a Pull Request meets all the required checks and security conditions, the repository will automatically approve and merge the PR into the `main` branch.
+We run an automated validation workflow on every Pull Request. A maintainer will manually review and merge the Pull Request once all validation checks pass.
 
-### Automated Merge Conditions
+### Pull Request Requirements
 
-For a Pull Request to be merged automatically, it must pass the following checks:
+For a Pull Request to be approved and merged, it must pass the following checks:
 
 1. **Security Filters (File Constraints):**
    * The Pull Request must **only** modify `canvas.json` and files within the `Song/` or `Album/` directories.
-   * Any modifications to scripts, GitHub Action workflows, web pages, or stylesheets will disable auto-merge and require manual developer review.
+   * Any modifications to scripts, GitHub Action workflows, web pages, or stylesheets will flag the PR for manual review.
 
 2. **GitHub Username Ownership Prefix:**
    * Newly added canvas files must be prefixed with your GitHub username (e.g., `username-filename.mp4` or `username-filename.m3u8`).

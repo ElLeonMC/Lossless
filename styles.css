@@ -962,6 +962,39 @@ footer a:hover {
     border-color: var(--card-border);
 }
 
+.github-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--bg-alt);
+    border: 1px solid var(--card-border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.8rem;
+    transition: var(--transition);
+}
+
+.auth-card:hover .github-icon-wrapper {
+    transform: scale(1.05);
+    border-color: var(--accent-monochrome);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.github-icon-wrapper i {
+    font-size: 2.5rem;
+    color: var(--accent-monochrome);
+    margin-bottom: 0 !important;
+}
+
+.auth-card h3, .form-card h3, .status-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    color: var(--accent-monochrome);
+}
+
 .form-card {
     background: #ffffff;
     border: 1px solid var(--card-border);
@@ -1045,8 +1078,8 @@ footer a:hover {
     width: 100%;
     background: #ffffff;
     border: 1px solid var(--card-border);
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    border-radius: 10px;
     color: var(--text-main);
     font-size: 0.95rem;
     outline: none;
@@ -1056,14 +1089,14 @@ footer a:hover {
 
 .form-group input[type="text"]:focus {
     border-color: var(--accent-monochrome);
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02), 0 0 0 3px rgba(0, 0, 0, 0.02);
 }
 
 .segmented-control {
     display: flex;
     background: var(--bg-alt);
-    padding: 0.25rem;
-    border-radius: 8px;
+    padding: 0.3rem;
+    border-radius: 10px;
     border: 1px solid var(--card-border);
 }
 
@@ -1074,11 +1107,12 @@ footer a:hover {
 .segment-btn {
     flex: 1;
     text-align: center;
-    padding: 0.65rem;
+    padding: 0.75rem;
     font-size: 0.88rem;
-    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
     color: var(--text-dim);
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
     display: flex;
@@ -1094,9 +1128,9 @@ footer a:hover {
 }
 
 .drag-drop-box {
-    border: 2px dashed #cccccc;
-    border-radius: 12px;
-    padding: 2.5rem;
+    border: 2px dashed #d1d5db;
+    border-radius: 14px;
+    padding: 3rem 2rem;
     text-align: center;
     background: var(--bg-alt);
     cursor: pointer;
@@ -1110,6 +1144,7 @@ footer a:hover {
 .drag-drop-box:hover, .drag-drop-box.drag-active {
     border-color: var(--accent-monochrome);
     background: #ffffff;
+    box-shadow: var(--shadow-soft);
 }
 
 .drop-icon {
@@ -1120,11 +1155,12 @@ footer a:hover {
 }
 
 .drag-drop-box:hover .drop-icon {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     color: var(--accent-monochrome);
 }
 
 .drop-text {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-main);
@@ -1196,11 +1232,12 @@ footer a:hover {
 }
 
 .validation-container {
-    background: var(--bg-alt);
+    background: #ffffff;
     border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 1.5rem;
+    border-radius: 14px;
+    padding: 1.8rem;
     margin-top: 2rem;
+    box-shadow: var(--shadow-soft);
 }
 
 .validation-title {
@@ -1210,9 +1247,9 @@ footer a:hover {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--text-main);
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     border-bottom: 1px solid var(--card-border);
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.6rem;
 }
 
 .validation-list {
@@ -1228,15 +1265,17 @@ footer a:hover {
     font-size: 0.88rem;
     color: var(--text-dim);
     transition: var(--transition);
+    font-weight: 500;
 }
 
 .validation-item code {
-    background: #ffffff;
+    background: var(--bg-alt);
     border: 1px solid var(--card-border);
-    padding: 0.1rem 0.3rem;
+    padding: 0.15rem 0.35rem;
     border-radius: 4px;
     font-family: monospace;
     font-size: 0.8rem;
+    color: #ef4444;
 }
 
 .validation-item .check-status {
@@ -1262,12 +1301,35 @@ footer a:hover {
     padding: 4rem 3rem;
 }
 
-.status-card h3 {
+.contribute-container .btn {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: var(--accent-monochrome);
+    border-radius: 10px;
+    padding: 0.9rem 2.2rem;
+    letter-spacing: 0.3px;
+    transition: var(--transition);
+}
+
+.contribute-container .btn-primary {
+    background: var(--accent-monochrome);
+    color: #ffffff;
+    border: 1px solid var(--accent-monochrome);
+}
+
+.contribute-container .btn-primary:hover {
+    background: #1f2937;
+    border-color: #1f2937;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.contribute-container .btn-primary:disabled {
+    background: #d1d5db;
+    border-color: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 @media (max-width: 480px) {
